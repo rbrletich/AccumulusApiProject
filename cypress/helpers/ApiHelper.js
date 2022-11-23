@@ -57,14 +57,19 @@ class ApiHelper{
 	// This takes parameters status, body, and expected results.  First it verifies a 200 status is returned
 	//  It iterates through the response body to verify the expected values are returned returned in the response.
 	makeGetAssertions(status, body, expectedResponse, expectedStatus = 200){
-		expect(status).to.eq(expectedStatus)
-		expect(body.count).to.eq(expectedResponse.length)
+		this.makeStatusAssertion(status, expectedStatus)
+		if (expectedResponse != []) expect(body.count).to.eq(expectedResponse.length)
 		for(let i=0; i<expectedResponse.length; i++){
 	        expect(body.todos[i].todo).to.eq(expectedResponse[i].todo)
 	        expect(body.todos[i].completed).to.eq(expectedResponse[i].completed)
-	        expect(body.todos[i].id).to.eq(expectedResponse[i].id)
+	        if(typeof expectedResponse[i].id != 'undefined')expect(body.todos[i].id).to.eq(expectedResponse[i].id)
 	    }
 	}
+
+	makeStatusAssertion(status, expectedStatus){
+		expect(status).to.eq(expectedStatus)
+	}
+
 }
 
 module.exports = new ApiHelper();
