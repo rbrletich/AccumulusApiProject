@@ -1,4 +1,4 @@
-class TestData{
+class ApiTestData{
 	createTodoBody = {  
       "todo": "Finish the Accumuls coding challenge",
       "completed": true,
