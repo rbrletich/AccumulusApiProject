@@ -53,16 +53,22 @@ class ApiHelper {
     return url
   }
 
-  // This takes parameters status, body, and expected results.  First it verifies a 200 status is returned
-  //  It iterates through the response body to verify the expected values are returned returned in the response.
+  // This takes parameters status, body, and expectedResults.  First it verifies a 200 status is returned and verifies
+  // the expected number of responses are returned in the body.  It then iterates through each key value pair for each
+  // value in the expected results array and performs assertions to confirm the response body contains the expected values.
   makeGetAssertions (status, body, expectedResponse, expectedStatus = 200) {
-    this.makeStatusAssertion(status, expectedStatus)
-    if (expectedResponse != []) expect(body.count).to.eq(expectedResponse.length)
-    for (let i = 0; i < expectedResponse.length; i++) {
-	  expect(body.todos[i].todo).to.eq(expectedResponse[i].todo)
-	  expect(body.todos[i].completed).to.eq(expectedResponse[i].completed)
-	  if (typeof expectedResponse[i].id !== 'undefined')expect(body.todos[i].id).to.eq(expectedResponse[i].id)
-	}
+    this.makeStatusAssertion(status, expectedStatus) // Confirms the status matches the 
+    expect(body.count).to.eq(expectedResponse.length)
+	    
+	  for (let i = 0; i <expectedResponse.length; i++) {
+	  	let keys = Object.keys(expectedResponse[i]) //  Gets the keys passed in expectedRespons to select which validations will be performed.
+		for (let j=0; j<keys.length; j++){
+			cy.log('The following assertion verifies the value of' + keys[j] + 'returned in the API response matches the expected value')
+			cy.log(body.todos[i][keys[j]])
+			cy.log(expectedResponse[i][keys[j]])
+			expect(body.todos[i][keys[j]]).to.eq(expectedResponse[i][keys[j]])
+		}
+	  }
   }
 
   makeStatusAssertion (status, expectedStatus) {
