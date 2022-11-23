@@ -1,4 +1,5 @@
 import ApiHelper from '../helpers/ApiHelper';
+import TestData from '../testData/TestData';
 
 describe('These tests are used to validate the todo API is functioning as intended', () => {
   it('Makes a get call to the todo API and provides parameter \'id\' and \'completed\', then verifies the result', () => {
@@ -23,13 +24,8 @@ describe('These tests are used to validate the todo API is functioning as intend
       })
   })
 
-  it.only('Makes a post call', () => {
-    let createTodoBody = {  
-      "todo": "todo 3",
-      "completed": true,
-      "userId": 84872,
-      "userName": "Patty Towne"
-    }
+  it('Makes a post call', () => {
+    let createTodoBody = TestData.createTodoBody
     cy.log(createTodoBody)
     let options = {url: 'https://637d2c3e9c2635df8f833d30.mockapi.io/todos', body: createTodoBody, method: 'post'}
     ApiHelper.makeApiCall(options)
@@ -40,6 +36,5 @@ describe('These tests are used to validate the todo API is functioning as intend
       .then(() => {
         ApiHelper.makeApiCall(options)
       })
-
   })
 })
