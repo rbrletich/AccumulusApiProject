@@ -14,6 +14,7 @@ class ApiHelper{
 			case 'put':
 				break;
 			case 'delete':
+				response = this.makeDeleteCall(options.url, options.id)
 		}
 		return response
 	}
@@ -26,8 +27,14 @@ class ApiHelper{
 	}
 
 	makePostCall(url, body){
-		cy.log('body', body)
 		let response = cy.request('POST', url, body)
+		return response
+	}
+
+	makeDeleteCall(url, id){
+		cy.log('id', id)
+		url = url + '/' + id
+		let response = cy.request('DELETE', url)
 		return response
 	}
 
