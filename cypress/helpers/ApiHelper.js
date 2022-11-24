@@ -11,6 +11,8 @@ class ApiHelper {
         return response
         break
       case 'put':
+        response = this.makePutCall(options.url, options.body, options.id)
+        return response
         break
       case 'delete':
         response = this.makeDeleteCall(options.url, options.id)
@@ -27,6 +29,12 @@ class ApiHelper {
 
   makePostCall (url, body) {
     const response = cy.request('POST', url, body)
+    return response
+  }
+
+  makePutCall (url, body, id) {
+    url = url + '/' + id
+    const response = cy.request('PUT', url, body, id)
     return response
   }
 
@@ -58,17 +66,18 @@ class ApiHelper {
   // value in the expected results array and performs assertions to confirm the response body contains the expected values.
   makeGetAssertions (status, body, expectedResponse, expectedStatus = 200) {
     this.makeStatusAssertion(status, expectedStatus) // Confirms the status matches the 
+	  this.makeResponseAssertions(body, expectedResponse)  
+  }
+
+  makeResponseAssertions(body, expectedResponse){
     expect(body.count).to.eq(expectedResponse.length)
-	    
-	  for (let i = 0; i <expectedResponse.length; i++) {
-	  	let keys = Object.keys(expectedResponse[i]) //  Gets the keys passed in expectedRespons to select which validations will be performed.
-		for (let j=0; j<keys.length; j++){
-			cy.log('The following assertion verifies the value of' + keys[j] + 'returned in the API response matches the expected value')
-			cy.log(body.todos[i][keys[j]])
-			cy.log(expectedResponse[i][keys[j]])
-			expect(body.todos[i][keys[j]]).to.eq(expectedResponse[i][keys[j]])
-		}
-	  }
+    for (let i = 0; i <expectedResponse.length; i++) {
+      let keys = Object.keys(expectedResponse[i]) //  Gets the keys passed in expectedRespons to select which validations will be performed.
+      for (let j=0; j<keys.length; j++){
+        cy.log('The following assertion verifies the value of ' + keys[j] + 'returned in the API response matches the expected value')
+        expect(body.todos[i][keys[j]]).to.eq(expectedResponse[i][keys[j]])
+      }
+    }
   }
 
   makeStatusAssertion (status, expectedStatus) {
