@@ -21,12 +21,12 @@ class ApiTestData {
   }
 
   idSearchResults = [
-  { 
-    todo: 'todo 1', 
-    completed: false, 
-    userId: 69657, 
-    id: '1' 
-  }
+    {
+      todo: 'todo 1',
+      completed: false,
+      userId: 69657,
+      id: '1'
+    }
   ]
 
   completedSearchResults = [
