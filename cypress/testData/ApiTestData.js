@@ -6,6 +6,20 @@ class ApiTestData {
     userName: 'Patty Towne'
   }
 
+  updateTodoBody = {
+    todo: 'Finish the Accumulus coding challenge',
+    completed: true,
+    userId: 2345,
+    userName: 'Richard Brletich'
+  }
+
+  undoUpdateTodoBody = {
+    todo: 'Finish the Accumulus coding challenge',
+    completed: false,
+    userId: 2345,
+    userName: 'Richard Brletich'
+  }
+
   idSearchResults = [
   { 
     todo: 'todo 1', 
