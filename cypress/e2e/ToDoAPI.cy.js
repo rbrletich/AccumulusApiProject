@@ -4,20 +4,19 @@ import ApiTestData from '../testData/ApiTestData'
 describe('These tests are used to validate the todo API is functioning as intended', () => {
   it('Makes a get call to the todo API and provides parameter \'id\' and \'completed\', then verifies the result', () => {
     const expectedResponse = ApiTestData.idSearchResults
-    const options = { url: 'https://637d2c3e9c2635df8f833d30.mockapi.io/todos', parameters: { id: 1 }, method: 'get' }
-    ApiHelper.makeApiCall(options)
+    const parameters = { id: 1 }
+    ApiHelper.makeGetCall('https://637d2c3e9c2635df8f833d30.mockapi.io/todos', parameters)
       .then(({ status, body }) => {
-        ApiHelper.makeGetAssertions(status, body, expectedResponse)
+        ApiHelper.makeTodoGetAssertions(status, body, expectedResponse)
       })
   })
 
   it('Makes a call to the todo API and provides parameter \'completed\', then verifies the result', () => {
-    const parameters = { completed: true }
     const expectedResponse = ApiTestData.completedSearchResults
-    const options = { url: 'https://637d2c3e9c2635df8f833d30.mockapi.io/todos', parameters: { completed: true }, method: 'get' }
-    ApiHelper.makeApiCall(options)
+    const parameters = { completed: true }
+    ApiHelper.makeGetCall('https://637d2c3e9c2635df8f833d30.mockapi.io/todos', parameters)
       .then(({ status, body }) => {
-        ApiHelper.makeGetAssertions(status, body, expectedResponse)
+        ApiHelper.makeTodoGetAssertions(status, body, expectedResponse)
       })
   })
 
@@ -25,20 +24,21 @@ describe('These tests are used to validate the todo API is functioning as intend
     const createTodoBody = ApiTestData.createTodoBody
     cy.log(createTodoBody)
     let options = { url: 'https://637d2c3e9c2635df8f833d30.mockapi.io/todos', body: createTodoBody, method: 'post' }
+    // Makes a put call to create a data entry with known data.
     ApiHelper.makeApiCall(options)
       .then(({ status, body }) => {
-        const id = body.id
-        const parameters = { id }
+        const id = body.id // Getting the created Todo id value to perform a get call
+        const parameters = { id: id } // 
         options = { url: 'https://637d2c3e9c2635df8f833d30.mockapi.io/todos', parameters, method: 'get' }
       })
       .then(({ status, body }) => {
         ApiHelper.makeApiCall(options)
           .then(({ status, body }) => {
             cy.log('createToDoBody', createTodoBody)
-            ApiHelper.makeGetAssertions(status, body, [createTodoBody])
+            ApiHelper.makeTodoGetAssertions(status, body, [createTodoBody])
           })
         const id = body.id
-        const parameters = { id }
+        const parameters = { id: id }
         options = { url: 'https://637d2c3e9c2635df8f833d30.mockapi.io/todos', id, method: 'delete' }
       })
       .then(() => {
@@ -60,7 +60,7 @@ describe('These tests are used to validate the todo API is functioning as intend
       ApiHelper.makeApiCall(options)
         .then(({ status, body }) => {
           cy.log('createToDoBody', createTodoBody)
-          ApiHelper.makeGetAssertions(status, body, [createTodoBody])
+          ApiHelper.makeTodoGetAssertions(status, body, [createTodoBody])
         })
       const id = body.id
       const parameters = { id }

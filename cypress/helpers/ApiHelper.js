@@ -45,7 +45,7 @@ class ApiHelper {
     return response
   }
 
-  // This method takes parameters url and parameters.  It uses a for loop to append all parameters to the request url.
+  // This methos is used to append the url to make get calls if one or more parameters are to be passed in.
   appendParameters (url, parameters) {
     const keys = Object.keys(parameters)
     for (let i = 0; i < keys.length; i++) {
@@ -61,18 +61,22 @@ class ApiHelper {
     return url
   }
 
-  // This takes parameters status, body, and expectedResults.  First it verifies a 200 status is returned and verifies
-  // the expected number of responses are returned in the body.  It then iterates through each key value pair for each
-  // value in the expected results array and performs assertions to confirm the response body contains the expected values.
-  makeGetAssertions (status, body, expectedResponse, expectedStatus = 200) {
+  // This takes parameters status, body, and expectedResponse, and an options expected Status.  It then calls
+  // makeStatusAssertions and makeTodResponseAssertions to valide the response functions as expected.
+  makeTodoGetAssertions (status, body, expectedResponse, expectedStatus = 200) {
     this.makeStatusAssertion(status, expectedStatus) // Confirms the status matches the 
-	  this.makeResponseAssertions(body, expectedResponse)  
+	  this.makeTodoResponseAssertions(body, expectedResponse)  
   }
 
-  makeResponseAssertions(body, expectedResponse){
+  // This method is used to make assertion on the body of the Todo API response.
+  makeTodoResponseAssertions(body, expectedResponse){
     expect(body.count).to.eq(expectedResponse.length)
+    // Iterate through each element of the expectedResponse array to allow for multiple Todos to be validated if a response
+    // is expected to return multiple Todos.
     for (let i = 0; i <expectedResponse.length; i++) {
       let keys = Object.keys(expectedResponse[i]) //  Gets the keys passed in expectedRespons to select which validations will be performed.
+      // Iterate through each key in the expectedResponse value to validate the expected values returned.  Any key value pair provided in
+      // expectedResponse will be validated against the API response.
       for (let j=0; j<keys.length; j++){
         cy.log('The following assertion verifies the value of ' + keys[j] + 'returned in the API response matches the expected value')
         expect(body.todos[i][keys[j]]).to.eq(expectedResponse[i][keys[j]])
@@ -80,6 +84,7 @@ class ApiHelper {
     }
   }
 
+  // This method is used to verify the expected status was returned by an API call.
   makeStatusAssertion (status, expectedStatus) {
     expect(status).to.eq(expectedStatus)
   }
