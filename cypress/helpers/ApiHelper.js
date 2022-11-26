@@ -1,25 +1,4 @@
 class ApiHelper {
-  makeApiCall (options) {
-    let response = []
-    switch (options.method) {
-      case 'get':
-        response = this.makeGetCall(options.url, options.parameters)
-        return response
-        break
-      case 'post':
-        response = this.makePostCall(options.url, options.body)
-        return response
-        break
-      case 'put':
-        response = this.makePutCall(options.url, options.body, options.id)
-        return response
-        break
-      case 'delete':
-        response = this.makeDeleteCall(options.url, options.id)
-    }
-    return response
-  }
-
   makeGetCall (url, parameters) {
     url = this.appendParameters(url, parameters)
     const response = cy.request(url)
@@ -85,7 +64,7 @@ class ApiHelper {
   }
 
   // This method is used to verify the expected status was returned by an API call.
-  makeStatusAssertion (status, expectedStatus) {
+  makeStatusAssertion (status, expectedStatus = 200) {
     expect(status).to.eq(expectedStatus)
   }
 }
