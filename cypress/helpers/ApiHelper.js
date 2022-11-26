@@ -9,7 +9,7 @@ class ApiHelper {
     const response = cy.request('POST', url, body)
     return response
   }
-  
+
   makeDeleteCall (url, id) {
     url = url + '/' + id
     const response = cy.request('DELETE', url)

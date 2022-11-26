@@ -94,7 +94,8 @@ describe('These tests are used to validate the todos API is functioning as inten
       })
   })
 
-  it('This test should fail to show the reporter function when a test fails',() => {
+  it('This test should fail to show the reporter function when a test fails', () => {
+    expect(true).to.equal(true)
     expect(true).to.equal(false)
   })
 })

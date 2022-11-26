@@ -1,5 +1,4 @@
 class ApiTestData {
-  
   createTodoBody = {
     todo: 'Finish the Accumulus coding challenge',
     completed: false,
