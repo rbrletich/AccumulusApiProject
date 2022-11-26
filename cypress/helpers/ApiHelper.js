@@ -9,13 +9,7 @@ class ApiHelper {
     const response = cy.request('POST', url, body)
     return response
   }
-
-  makePutCall (url, body, id) {
-    url = url + '/' + id
-    const response = cy.request('PUT', url, body, id)
-    return response
-  }
-
+  
   makeDeleteCall (url, id) {
     url = url + '/' + id
     const response = cy.request('DELETE', url)
