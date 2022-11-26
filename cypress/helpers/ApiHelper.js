@@ -2,7 +2,6 @@ class ApiHelper {
   makeGetCall (url, parameters) {
     url = this.appendParameters(url, parameters)
     const response = cy.request(url)
-    cy.log('The response is:', response)
     return response
   }
 
@@ -18,7 +17,6 @@ class ApiHelper {
   }
 
   makeDeleteCall (url, id) {
-    cy.log('id', id)
     url = url + '/' + id
     const response = cy.request('DELETE', url)
     return response
@@ -36,7 +34,6 @@ class ApiHelper {
         url = url + '&' + key + '=' + parameters[key]
       }
     }
-    cy.log('This is the url:', url)
     return url
   }
 
@@ -57,7 +54,7 @@ class ApiHelper {
       // Iterate through each key in the expectedResponse value to validate the expected values returned.  Any key value pair provided in
       // expectedResponse will be validated against the API response.
       for (let j = 0; j < keys.length; j++) {
-        cy.log('The following assertion verifies the value of ' + keys[j] + 'returned in the API response matches the expected value')
+        cy.log('The following assertion verifies the value of ' + keys[j] + ' is returned in the API response matches the expected value')
         expect(body.todos[i][keys[j]]).to.eq(expectedResponse[i][keys[j]])
       }
     }

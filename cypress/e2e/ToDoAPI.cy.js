@@ -20,7 +20,7 @@ describe('These tests are used to validate the todo API is functioning as intend
       })
   })
 
-  it.only('Makes a post call to create a todo record. Then, makes a get call to verify the record has the correct data before deleting the record', () => {
+  it('Makes a post call to create a todo record. Then, makes a get call to verify the record has the correct data before deleting the record', () => {
     const createTodoBody = ApiTestData.createTodoBody
     let options = { url: '/todos', body: createTodoBody, method: 'post' }
     // Makes a put call to create a data entry with known data.
@@ -33,7 +33,6 @@ describe('These tests are used to validate the todo API is functioning as intend
       .then(({ status, body }) => {
         ApiHelper.makeGetCall('/todos', options.parameters)
           .then(({ status, body }) => {
-            cy.log('createToDoBody', createTodoBody)
             ApiHelper.makeTodoGetAssertions(status, body, [createTodoBody])
           })
         const id = body.id // Getting the created Todo id value to perform a get call

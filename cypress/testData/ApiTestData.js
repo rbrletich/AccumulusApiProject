@@ -1,9 +1,10 @@
 class ApiTestData {
+  
   createTodoBody = {
     todo: 'Finish the Accumulus coding challenge',
     completed: false,
     userId: 84872,
-    userName: 'Patty Towne'
+    userName: 'Richard Brletich'
   }
 
   updateTodoBody = {
