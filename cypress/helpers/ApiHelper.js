@@ -22,7 +22,6 @@ class ApiHelper {
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i]
       if (i === 0) {
-      	cy.log('the parameter being appended is:', parameters[key])
         url = url + '?' + key + '=' + parameters[key]
       } else {
         url = url + '&' + key + '=' + parameters[key]
@@ -48,7 +47,6 @@ class ApiHelper {
       // Iterate through each key in the expectedResponse value to validate the expected values returned.  Any key value pair provided in
       // expectedResponse will be validated against the API response.
       for (let j = 0; j < keys.length; j++) {
-        cy.log('The following assertion verifies the value of ' + keys[j] + ' is returned in the API response matches the expected value')
         expect(body.todos[i][keys[j]]).to.eq(expectedResponse[i][keys[j]])
       }
     }
