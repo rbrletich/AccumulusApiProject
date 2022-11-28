@@ -95,8 +95,4 @@ describe('These tests are used to validate the todos API is functioning as inten
           })
       })
   })
-
-  it('This test should fail', () => {
-    expect(true).to.equal(false)
-  })
 })
