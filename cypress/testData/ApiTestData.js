@@ -1,5 +1,5 @@
 class ApiTestData {
-  // This is used to create a custom 'Todo' record then perform assertions against the created record  
+  // This is used to create a custom 'Todo' record then perform assertions against the created record
   createTodoBody = {
     todo: 'Finish the Accumulus coding challenge',
     completed: false,

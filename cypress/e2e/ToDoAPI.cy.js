@@ -3,8 +3,8 @@ import ApiTestData from '../testData/ApiTestData'
 
 describe('These tests are used to validate the todos API is functioning as intended', () => {
   it('Makes a get call to the todo API and provides parameter \'id\'  then verifies the result', () => {
-    const expectedResponse = ApiTestData.idSearchResults 
-    const parameters = { id: 1 } 
+    const expectedResponse = ApiTestData.idSearchResults
+    const parameters = { id: 1 }
     // Makes get call with the parameters int he parameters hash
     ApiHelper.makeGetCall('/todos', parameters)
       .then(({ status, body }) => {
